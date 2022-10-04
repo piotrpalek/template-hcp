@@ -1,0 +1,92 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": [
+        "./src/components/*"
+      ],
+      "hooks/*": [
+        "./src/Hooks/*"
+      ],
+      "resources/*": [
+        "./src/Resources/*"
+      ],
+      "schema/*": [
+        "./src/Schema/*"
+      ],
+      "types/*": [
+        "./src/types/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
+      "spec-utils/*": [
+        "./spec/javascripts/utils/*"
+      ],
+      "spec-resources/*": [
+        "./spec/javascripts/Resources/*"
+      ],
+      "spec/*": [
+        "./spec/javascripts/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+    },
+    "rootDirs": [
+      "./src",
+      "./spec/javascripts"
+    ],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "incremental": true,
+    "target": "ESNext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "allowJs": true,
+    // Don't emit; allow Babel to transform files.
+    "noEmit": true,
+    // Import non-ES modules as default imports.
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "importHelpers": true,
+    "importsNotUsedAsValues": "remove",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "isolatedModules": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./src/**/*",
+    "./spec/javascripts/**/*",
+    "./playwright-ct.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+  ]
+}
