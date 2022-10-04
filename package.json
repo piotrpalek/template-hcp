@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve",
+    "start": "yarn test-ct",
     "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
