@@ -1,17 +1,18 @@
-const webpack = require("webpack");
-const path = require("path");
-const WebpackAssetsManifest = require("webpack-assets-manifest");
-const CompressionPlugin = require("compression-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+import webpack from "webpack";
+import path from "path";
+import WebpackAssetsManifest from "webpack-assets-manifest";
+import CompressionPlugin from "compression-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { resolve } from 'node:path';
 
-module.exports = (env, argv) => {
+export default (env, argv) => {
   const isProductionMode = argv.mode === "production";
 
   return {
     entry: {
-      client: ["./src/index.tsx"]
+      client: ["./src/index.tsx"],
     },
     mode: isProductionMode ? "production" : "development",
     target: ["web", "es5"],
@@ -20,54 +21,51 @@ module.exports = (env, argv) => {
         {
           test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
-          include: path.resolve(__dirname, "./src"),
+          include: resolve("./src"),
           use: {
             loader: "babel-loader",
             options: {
               cacheDirectory: true,
-              cacheCompression: false
-            }
-          }
+              cacheCompression: false,
+            },
+          },
         },
         {
           test: /\.(sa|sc|c)ss$/i,
-          use: ["style-loader", "css-loader", "sass-loader"]
-        }
+          use: ["style-loader", "css-loader", "sass-loader"],
+        },
       ],
-      strictExportPresence: true
+      strictExportPresence: true,
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       alias: {
         process: "process/browser",
-        "@": path.resolve(__dirname, "./src"),
-        components: path.resolve(__dirname, "./src/components"),
-        hooks: path.resolve(__dirname, "./src/Hooks"),
-        resources: path.resolve(__dirname, "./src/Resources"),
-        schema: path.resolve(__dirname, "./src/Schema"),
-        types: path.resolve(__dirname, "./src/types"),
-        utils: path.resolve(__dirname, "./src/utils"),
-        spec: path.resolve(__dirname, "./spec/javascripts"),
-        "spec-utils": path.resolve(__dirname, "./spec/javascripts/utils"),
-        "spec-resources": path.resolve(
-          __dirname,
-          "./spec/javascripts/Resources"
-        )
+        "@": resolve("./src"),
+        components: resolve("./src/components"),
+        hooks: resolve("./src/Hooks"),
+        resources: resolve("./src/Resources"),
+        schema: resolve("./src/Schema"),
+        types: resolve("./src/types"),
+        utils: resolve("./src/utils"),
+        spec: resolve("./spec/javascripts"),
+        "spec-utils": resolve("./spec/javascripts/utils"),
+        "spec-resources": resolve("./spec/javascripts/Resources"),
       },
       fallback: {
-        crypto: false
-      }
+        crypto: false,
+      },
     },
     output: {
       pathinfo: false,
-      path: path.resolve(__dirname, "dist"),
+      path: resolve("dist"),
       filename: isProductionMode ? "[name]-[contenthash].js" : "[name].js",
       chunkFilename: isProductionMode
         ? "[name]-[contenthash].chunk.js"
         : "[name].chunk.js",
       sourceMapFilename: isProductionMode
         ? "[name]-[contenthash].chunk.js.map"
-        : "[name].chunk.js.map"
+        : "[name].chunk.js.map",
     },
     optimization: {
       moduleIds: isProductionMode ? "deterministic" : "named",
@@ -86,28 +84,28 @@ module.exports = (env, argv) => {
             priority: -10,
             reuseExistingChunk: true,
             chunks: "all",
-            enforce: true
+            enforce: true,
           },
           default: {
             minChunks: 2,
             priority: -20,
-            reuseExistingChunk: true
-          }
-        }
-      }
+            reuseExistingChunk: true,
+          },
+        },
+      },
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./src/index.html"
+        template: "./src/index.html",
       }),
       new webpack.ProvidePlugin({
         process: "process/browser",
         React: "react",
-        moment: "moment"
+        moment: "moment",
       }),
       new WebpackAssetsManifest({
         output: "webpack-manifest.json",
-        entrypoints: true
+        entrypoints: true,
       }),
       ...(isProductionMode
         ? [new CompressionPlugin()]
@@ -116,21 +114,21 @@ module.exports = (env, argv) => {
               typescript: {
                 memoryLimit: 4096,
                 mode: "write-references",
-                configFile: path.resolve(__dirname, "tsconfig.json")
-              }
+                configFile: resolve("tsconfig.json"),
+              },
             }),
             new ReactRefreshWebpackPlugin({
-              overlay: false
-            })
-          ])
+              overlay: false,
+            }),
+          ]),
     ],
     externals: {
-      jquery: "jQuery"
+      jquery: "jQuery",
     },
     devtool: isProductionMode ? "source-map" : "eval-source-map",
     watchOptions: {
       aggregateTimeout: 50,
-      ignored: ["**/node_modules"]
+      ignored: ["**/node_modules"],
     },
     devServer: {
       hot: true,
@@ -138,8 +136,8 @@ module.exports = (env, argv) => {
       static: "./public",
       headers: { "Access-Control-Allow-Origin": "*" },
       allowedHosts: "all",
-      bonjour: true
+      bonjour: true,
     },
-    stats: isProductionMode ? undefined : "minimal"
+    stats: isProductionMode ? undefined : "minimal",
   };
 };
